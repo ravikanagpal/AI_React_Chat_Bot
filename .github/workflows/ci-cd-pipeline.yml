@@ -1,0 +1,77 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-versiob: [3.10, 3.11, 3.12] # Test across multiple Python versions
+
+    steps:
+    # Checkout source code
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+      # Lint the code
+    - name: Run flake8 Linter
+      run: |
+        pip install flake8
+        flake8 .
+
+      # Run tests
+    - name: Run tests
+      run: pytest
+
+      # Build the application (e.g., packaging as .whl file)
+    - name: Build the application
+      run: |
+        pip install build
+        python -m build
+
+  deploy:
+    needs: build-and-test # Only runs if 'build-and-test' is successful
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout source code
+      - uses: actions/checkout@v3
+
+      # Set up kubectl
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'v1.27.3' # Use a specific version of kubectl, update it as required
+
+      # Configure Kubernetes access
+      - name: Configure kubeconfig
+        env:
+          KUBECONFIG: ${{ secrets.KUBECONFIG }} # Kubernetes config stored in GitHub Secrets
+        run: |
+          echo "${KUBECONFIG}" | base64 -d > ~/.kube/config
+          chmod 600 ~/.kube/config
+
+      # Deploy to Kubernetes (apply manifests)
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl apply -f k8s/deployment.yaml
+          kubectl apply -f k8s/service.yaml
+
+      # Verify deployment status
+      - name: Verify Deployment
+        run: |
+          kubectl rollout status deployment/<deployment-name>
