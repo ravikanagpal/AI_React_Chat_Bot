@@ -1,0 +1,54 @@
+# Python related
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+env/
+venv/
+ENV/
+.cache/
+*.egg-info/
+.eggs/
+
+# IDE settings
+.idea/
+.vscode/
+
+# Logs and files
+*.log
+*.out
+*.tmp
+.DS_Store
+
+# Docker related
+build/
+docker-compose.override.yml
+.env
+
+# Node.js related (for frontend)
+node_modules/
+npm-debug.log*
+yarn-error.log
+
+# Deployment and CI/CD
+*.tfstate
+*.tfstate.*
+.terraform/
+*.log
+coverage/
+dist/
+*.pem
+
+# Ignore test results
+tests/__pycache__/
+.htmlcov/
+*.pytest_cache
+.coverage*
+
+# Temporary files
+*.swp
+*.swo
+*.bak
+
+# Ignore container artifacts
+frontend/build/
