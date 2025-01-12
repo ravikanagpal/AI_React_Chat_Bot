@@ -2,7 +2,7 @@
 
 A Python-based chat application built using **FastAPI** and **React**, featuring a dummy AI assistant, persistent **SQLite** storage, and containerization with Docker.
 
-## Features
+## **Solution Overview**
 
 ### **Backend**
 - Provides **RESTful APIs** for chat and chat history management.
@@ -14,8 +14,7 @@ A Python-based chat application built using **FastAPI** and **React**, featuring
 - Placeholder for integrating real LLM APIs (e.g., **OpenAI**, **Hugging Face**) in the future.
 
 ### **Frontend**
-- Developed with **React** for a dynamic and user-friendly interface.
-- Designed for seamless communication with the backend over REST APIs.
+- **React** based dynamic and user-friendly interface capable of communicating with the backend over REST APIs.
 
 ### **Containerization**
 - **Dockerized** backend and frontend for environment consistency.
