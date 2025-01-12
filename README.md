@@ -70,11 +70,9 @@ This section outlines the key design considerations and trade-offs made in the i
 ### **4. Frontend Design**
 
 **Current Implementation:**
-- Replaced the static HTML frontend with a **React-based** application, enabling dynamic rendering, improved UI interactivity, and usability.
-- Modern frontend practices like reusable components, state management, and integration with REST APIs have been adopted.
+- Replaced the static HTML frontend with a **React-based** application
 
 **Future Considerations:**
-- Implement **WebSocket support** for real-time updates to enhance user experience.
 - Add themes and responsiveness improvements, leveraging libraries like **Material-UI** or **TailwindCSS**.
 
 ---
@@ -145,7 +143,6 @@ This section outlines the key design considerations and trade-offs made in the i
 
 ---
 
-This design ensures a balance between simplicity for prototyping and scalability for future enhancements.
 
 ## Setup
 
