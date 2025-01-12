@@ -19,12 +19,12 @@ services:
     # Build the Docker image for the frontend service
     build:
       # Specify the build context directory containing the Dockerfile
-      context: ./frontend
+      context: ./my-frontend
       # Point to the Dockerfile used for building the image
       dockerfile: Dockerfile
     # Map port 8085 on the host to port 80 in the container
     ports:
-      - "8085:80"
+      - "3000:80"
     # Declare that the frontend service depends on the backend service
     depends_on:
       - backend
