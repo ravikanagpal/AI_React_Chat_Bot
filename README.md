@@ -26,10 +26,6 @@ A Python-based chat application built using **FastAPI** and **React**, featuring
 ### **Logging and Observability**
 - Integrated **Python logging** to track interactions and ease debugging.
 
-### **Scalability**
-- Stateless application architecture supporting horizontal scaling.
-- Compatible with **Kubernetes** for scaling in production environments.
-
 ---
 
 ## **Design Considerations**
