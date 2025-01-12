@@ -18,21 +18,23 @@ This section outlines the key design considerations and trade-offs made in the i
 
 ### **1. Technology Stack**
 
-- **FastAPI**: Chosen for its simplicity, asynchronous capabilities, and automatic OpenAPI documentation generation.
-- **Docker**: Used for containerization, ensuring consistency across development, testing, and production environments.
-- **Python Logging**: Integrated for observability and debugging during runtime.
-- **In-Memory Data Storage**: Used to store chat history for simplicity in this prototype.
+- **FastAPI**: Retained for its simplicity, asynchronous capabilities, and automatic OpenAPI documentation generation.
+- **React**: Chosen as the frontend framework for its component-based architecture, ease of use, and strong ecosystem support.
+- **SQLite**: Introduced as a lightweight, disk-based database for persistent backend storage.
+- **Docker**: Used for containerization to provide a consistent runtime environment across development, testing, and production.
+- **Python Logging**: Incorporated for observability and debugging.
 
 ---
 
 ### 2. Chat History Storage
 
 **Current Implementation:**
-- Chat history is now stored in a SQLite database for persistent storage. This ensures chat data remains available even after restarts, making it more suitable for practical use cases.
+- Chat history is stored in a **SQLite database**, ensuring persistence even after application restarts.
+- SQLite was chosen for its simplicity, zero-configuration setup, and capability to manage the required data volume for this application.
 
 **Future Considerations:**
-- Scale to larger databases like PostgreSQL or MongoDB for handling larger datasets or more complex queries.
-- Add caching mechanisms such as Redis for faster querying of frequently accessed data.
+- Upgrade to a robust database like PostgreSQL or MongoDB for scalability and support for larger datasets.
+- Introduce caching with **Redis** for faster access to frequently accessed chat data.
 
 ---
 
@@ -47,7 +49,19 @@ This section outlines the key design considerations and trade-offs made in the i
 
 ---
 
-### **4. Observability**
+### **4. Frontend Design**
+
+**Current Implementation:**
+- Replaced the static HTML frontend with a **React-based** application, enabling dynamic rendering, improved UI interactivity, and usability.
+- Modern frontend practices like reusable components, state management, and integration with REST APIs have been adopted.
+
+**Future Considerations:**
+- Implement **WebSocket support** for real-time updates to enhance user experience.
+- Add themes and responsiveness improvements, leveraging libraries like **Material-UI** or **TailwindCSS**.
+
+---
+
+### **5. Observability**
 
 - **Current Implementation**:
   - Integrated Python logging for tracking user messages, errors, and AI responses.
@@ -58,7 +72,7 @@ This section outlines the key design considerations and trade-offs made in the i
 
 ---
 
-### **5. Containerization and Portability**
+### **6. Containerization and Portability**
 
 - **Current Implementation**:
   - Docker is used to containerize the application, ensuring a consistent runtime environment.
@@ -69,7 +83,7 @@ This section outlines the key design considerations and trade-offs made in the i
 
 ---
 
-### **6. Scalability**
+### **7. Scalability**
 
 - **Current Implementation**:
   - Basic horizontal scaling is supported through Kubernetes/OpenShift configurations.
@@ -80,7 +94,7 @@ This section outlines the key design considerations and trade-offs made in the i
 
 ---
 
-### **7. Security**
+### **8. Security**
 
 - **Current Implementation**:
   - Sensitive information, such as API keys, can be stored as environment variables.
@@ -91,7 +105,7 @@ This section outlines the key design considerations and trade-offs made in the i
 
 ---
 
-### **8. API Design**
+### **9. API Design**
 
 - **Current Implementation**:
   - RESTful APIs are used for simplicity and broad compatibility.
@@ -102,7 +116,7 @@ This section outlines the key design considerations and trade-offs made in the i
 
 ---
 
-### **9. Testing and CI/CD**
+### **10. Testing and CI/CD**
 
 - **Current Implementation**:
   - Unit tests validate individual components like utility functions and API endpoints.
@@ -114,26 +128,23 @@ This section outlines the key design considerations and trade-offs made in the i
 
 ---
 
-### **10. Frontend Considerations**
-
-- **Current Implementation**:
-  - A simple HTML-based frontend is provided for user interaction.
-  - Designed with modern CSS for usability and responsiveness.
-- **Future Considerations**:
-  - Replace the static frontend with a dynamic one using React or Vue.js.
-  - Add WebSocket support for real-time communication.
-
----
-
 This design ensures a balance between simplicity for prototyping and scalability for future enhancements.
 
 ## Setup
 
 ### Prerequisites
 
-- Docker (If using Docker for setting it up)
-- Python 3.12 and pip (If setting up locally)
-- SQLite: Ensure SQLite is available, as it's required for chat history storage.
+1. **General Requirements**:
+   - Docker (if using containerization)
+   - Python 3.12 and pip (if running locally)
+
+2. **Database**:
+   - SQLite is used for chat history storage. Ensure SQLite is available on your system (most systems already include it by default).
+
+3. **Frontend Setup**:
+   - Node.js and npm are required for managing the React-based frontend.
+
+---
 
 ### Using Docker
 1. Clone the repository:
@@ -141,11 +152,15 @@ This design ensures a balance between simplicity for prototyping and scalability
    git clone <repo-url>
    cd <repo-directory>
    ```
-2. Build and start the application using Docker Compose:
+2. Use Docker Compose to build and start both the backend and React-based frontend:
     ```she
     docker-compose up --build
     ```
-3. Access the frontend in your browser at `http://localhost:8085/frontend.html` .
+3. Access the application in your browser:
+   - **Frontend**: `http://localhost:3000`
+   - The frontend communicates with the backend through RESTful APIs.
+
+4. The SQLite database (`chat.db`) will be created automatically when the backend starts.
 
 ### Run Locally
 
@@ -161,22 +176,37 @@ To run the application locally without Docker
    cd backend
    pip install -r requirements.txt
    ```
-3. Start the backend server:
-    ```sh
+3. Start the FastAPI backend:
+   ```sh
    uvicorn main:app --reload --host 127.0.0.1 --port 8000
    ```
-4. Navigate to the `frontend` directory and start a simple HTTP server:
-    ```sh
-   cd ../frontend
-   python -m http.server 8085
+
+   The API will be available at `http://127.0.0.1:8000`.
+
+   The SQLite database (`chat.db`) is created automatically when the backend starts.
    ```
-5. Access the frontend in your browser at `http://localhost:8085/frontend.html`
+#### Frontend Setup:
+4. Navigate to the `frontend` directory and install the React dependencies:
+   ```sh
+   cd ../my-frontend
+   npm install
+   ```
+
+5. Start the React development server:
+   ```sh
+   npm start
+   ```
+
+   By default, the frontend runs at `http://localhost:3000`.
+
+6. Ensure the backend is running at `http://127.0.0.1:8000` to enable API communication.
 
 ---
 
-## Database Notes
+### Database Configuration
 
-- SQLite file `chat.db` will be created in the default backend working directory.
+- The backend uses **SQLite** for storing chat history. By default, the database file (`chat.db`) is created in the `backend` working directory upon running the application.
+- You can choose a custom SQLite path or migrate to another database (e.g., PostgreSQL) by changing the database URL in the backend configuration (e.g., `settings.py`).
 
 ---
 
