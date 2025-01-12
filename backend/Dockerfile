@@ -22,10 +22,6 @@ COPY .. .
 # This maps to FastAPI's default port used by Uvicorn
 EXPOSE 8000
 
-# Use a non-root user with ID 1001 for better container security
-# Running as a non-root user minimizes risks if the application or container is compromised
-USER 1001
-
 # Default command to start the FastAPI application using Uvicorn
 # - `main:app` specifies the main file and the FastAPI app instance
 # - `--host 0.0.0.0` makes the app accessible externally (not just inside the container)
