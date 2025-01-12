@@ -1,6 +1,6 @@
 # Chat App
 
-A simple Python-based chat application with FastAPI that integrates with a dummy AI assistant.
+A simple Python-based chat application with FastAPI that integrates with a dummy AI assistant, featuring persistent storage using SQLite.
 
 ## Features
 
@@ -25,14 +25,14 @@ This section outlines the key design considerations and trade-offs made in the i
 
 ---
 
-### **2. Chat History Storage**
+### 2. Chat History Storage
 
-- **Current Implementation**:
-  - Chat history is stored in an in-memory list for simplicity and speed.
-  - This choice is suitable for prototyping and small-scale applications but lacks persistence and scalability.
-- **Future Considerations**:
-  - Replace in-memory storage with a database (e.g., SQLite, PostgreSQL, or MongoDB) for persistence and larger datasets.
-  - Introduce caching mechanisms (e.g., Redis) for frequently accessed data.
+**Current Implementation:**
+- Chat history is now stored in a SQLite database for persistent storage. This ensures chat data remains available even after restarts, making it more suitable for practical use cases.
+
+**Future Considerations:**
+- Scale to larger databases like PostgreSQL or MongoDB for handling larger datasets or more complex queries.
+- Add caching mechanisms such as Redis for faster querying of frequently accessed data.
 
 ---
 
@@ -133,6 +133,7 @@ This design ensures a balance between simplicity for prototyping and scalability
 
 - Docker (If using Docker for setting it up)
 - Python 3.12 and pip (If setting up locally)
+- SQLite: Ensure SQLite is available, as it's required for chat history storage.
 
 ### Using Docker
 1. Clone the repository:
@@ -170,6 +171,14 @@ To run the application locally without Docker
    python -m http.server 8085
    ```
 5. Access the frontend in your browser at `http://localhost:8085/frontend.html`
+
+---
+
+## Database Notes
+
+- SQLite file `chat.db` will be created in the default backend working directory.
+
+---
 
 ## Testing
 Run the tests using `pytest`:

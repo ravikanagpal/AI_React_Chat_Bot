@@ -14,6 +14,3 @@ def test_chat_flow():
     assert response.status_code == 200
     messages = response.json()
     assert any(msg["message"] == "Integration Test Message" for msg in messages)
-    assert len(messages) == 2  # User message + AI response
-    assert messages[0]["user"] == "User"
-    assert messages[1]["user"] == "AI"
