@@ -110,17 +110,7 @@ This section outlines the key design considerations and trade-offs made in the i
 
 ---
 
-### **8. Security**
-
-- **Current Implementation**:
-  - Sensitive information, such as API keys, can be stored as environment variables.
-- **Future Considerations**:
-  - Implement authentication and authorization for API endpoints (e.g., OAuth2, API tokens).
-  - Regularly scan dependencies and container images for vulnerabilities.
-
----
-
-### **9. Testing and CI/CD**
+### **8. Testing and CI/CD**
 
 - **Current Implementation**:
   - Unit tests validate individual components like utility functions and API endpoints.
