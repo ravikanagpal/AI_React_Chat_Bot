@@ -80,11 +80,11 @@ This section outlines the key design considerations and trade-offs made in the i
 ### **5. Observability**
 
 - **Current Implementation**:
-  - Integrated Python logging for tracking user messages, errors, and AI responses.
-  - Logs are written to stdout, making them suitable for redirection to centralized logging systems.
+  - Python logging for tracking user messages, errors, and AI responses.
+  - Designed with provisions for centralized logging via tools like **Datadog**, **Splunk**, or ELK Stack.
+  
 - **Future Considerations**:
   - Introduce **OpenTelemetry** or other distributed tracing tools.
-  - Centralized logging via tools like **Datadog**, **Splunk**, or ELK Stack.
 
 ---
 
@@ -120,18 +120,7 @@ This section outlines the key design considerations and trade-offs made in the i
 
 ---
 
-### **9. API Design**
-
-- **Current Implementation**:
-  - RESTful APIs are used for simplicity and broad compatibility.
-  - APIs are documented with clear contracts and example payloads.
-- **Future Considerations**:
-  - Enhance APIs with pagination for large chat histories.
-  - Explore GraphQL for more flexible query structures if needed.
-
----
-
-### **10. Testing and CI/CD**
+### **9. Testing and CI/CD**
 
 - **Current Implementation**:
   - Unit tests validate individual components like utility functions and API endpoints.
